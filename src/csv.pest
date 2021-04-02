@@ -1,3 +1,5 @@
 field = { (ASCII_DIGIT | "." | "-")+ }
 record = { field ~ ("," ~ field)* }
-file = { SOI ~ (record ~ ("\r\n" | "\n"))* ~ EOI }
+WHITESPACE = _{" " | "\t"}
+ENDOFLINE = _{"\r\n" | "\n"}
+file = { SOI ~ (record ~ ENDOFLINE)* ~ record ~ ENDOFLINE+ ~ EOI }
