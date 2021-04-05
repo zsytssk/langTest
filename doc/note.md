@@ -1,4 +1,4 @@
-https://pest.rs/book/examples/ini.html
+https://pest.rs/book/grammars/grammars.html
 
 `let a = 1;`
 
