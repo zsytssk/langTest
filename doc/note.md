@@ -2,6 +2,10 @@ https://pest.rs/book/examples/ini.html
 
 `let a = 1;`
 
+## 2021-04-05 09:52:55
+
+- @ques 有没有 not 语法
+
 ## 2021-01-04 11:23:14
 
 - @ques 变量怎么定义
