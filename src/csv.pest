@@ -1,8 +1,1 @@
-char = _{'a'..'z' | 'A'..'Z' | '0'..'9' | "_"}
-name = {char+}
-valueChar = {char | "/" | "." }
-value={valueChar*}
-property = {name ~ "="  ~ value}
-section  = {"["~ name ~"]"}
-WHITESPACE = _{" " | "\t"}
-file = { SOI ~ ((section | property)? ~ NEWLINE)* ~ EOI }
+test = { "1"* }
