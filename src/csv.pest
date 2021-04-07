@@ -1,8 +1,12 @@
-num = _{'0'..'9'}
-char = _{'a'..'z' | 'A'..'Z' | '0'..'9' | "_"}
-name = {!num ~ char+}
-NOT_SPACE = _{!("\"" | " " | "\t" | NEWLINE) ~ ANY}
-value = {"\"" ~ NOT_SPACE* ~ "\""}
-WHITESPACE = _{" " | "\t"}
-property = {name ~ ":" ~ value}
-file = {SOI ~ property  ~ EOI}
+raw_string = {
+    "r" ~ PUSH("#"*) ~ "\""    // push the number signs onto the stack
+    ~ raw_string_interior
+    ~ "\"" ~ POP               // match a quotation mark and the number signs
+}
+raw_string_interior = {
+    (
+        !("\"" ~ PEEK)    // unless the next character is a quotation mark
+                          // followed by the correct amount of number signs,
+        ~ ANY             // consume one character
+    )*
+}

@@ -1,1 +1,6 @@
-test: "sfdsfdsfds"
+r###"
+    Some number of number signs # followed by a quotation mark ".
+
+    Quotation marks can be used anywhere inside: """"""""",
+    as long as one is not followed by a matching number of number signs,
+    which ends the string: "###;
