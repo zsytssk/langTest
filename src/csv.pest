@@ -1,1 +1,7 @@
-test = { "1"* }
+num = _{'0'..'9'}
+char = _{'a'..'z' | 'A'..'Z' | '0'..'9' | "_"}
+name = {!num ~ char+}
+NOT_SPACE = _{!("\"" | " " | "\t" | NEWLINE) ~ ANY}
+value = {"\"" ~ NOT_SPACE* ~ "\""}
+WHITESPACE = _{" " | "\t"}
+property = {name ~ ":" ~ value}
