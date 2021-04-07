@@ -5,3 +5,4 @@ NOT_SPACE = _{!("\"" | " " | "\t" | NEWLINE) ~ ANY}
 value = {"\"" ~ NOT_SPACE* ~ "\""}
 WHITESPACE = _{" " | "\t"}
 property = {name ~ ":" ~ value}
+file = {SOI ~ property  ~ EOI}
