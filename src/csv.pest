@@ -1,12 +1,32 @@
-raw_string = {
-    "r" ~ PUSH("#"*) ~ "\""    // push the number signs onto the stack
-    ~ raw_string_interior
-    ~ "\"" ~ POP               // match a quotation mark and the number signs
+WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
+object = {
+    "{" ~ "}" |
+    "{" ~ pair ~ ("," ~ pair)* ~ "}"
 }
-raw_string_interior = {
-    (
-        !("\"" ~ PEEK)    // unless the next character is a quotation mark
-                          // followed by the correct amount of number signs,
-        ~ ANY             // consume one character
-    )*
+pair = { string ~ ":" ~ value }
+
+array = {
+    "[" ~ "]" |
+    "[" ~ value ~ ("," ~ value)* ~ "]"
+}
+
+value = _{ object | array | string | number | boolean | null }
+
+boolean = { "true" | "false" }
+
+null = { "null" }
+
+string = ${ "\"" ~ inner ~ "\"" }
+inner = @{ char* }
+char = {
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+number = @{
+    "-"?
+    ~ ("0" | ASCII_NONZERO_DIGIT ~ ASCII_DIGIT*)
+    ~ ("." ~ ASCII_DIGIT*)?
+    ~ (^"e" ~ ("+" | "-")? ~ ASCII_DIGIT+)?
 }

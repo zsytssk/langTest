@@ -1,6 +1,5 @@
-r###"
-    Some number of number signs # followed by a quotation mark ".
-
-    Quotation marks can be used anywhere inside: ",
-    as long as one is not followed by a matching number of number signs,
-    which ends the string: "###;
+{
+    "nesting": { "inner object": {} },
+    "an array": [1.5, true, null, 1e-6],
+    "string with escaped double quotes" : "\"quick brown foxes\""
+}
