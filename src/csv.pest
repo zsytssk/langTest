@@ -1,7 +1,10 @@
 char = _{ !("\"" | "\\") ~ ANY  | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
     | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4}) }
 inner = @{char*}
-string = ${ "\"" ~ inner ~ "\"" }
+inner2 = _{inner}
+string = @{ "\"" ~ inner2 ~ "\"" }
+key_char = _{'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | "_"}
+key = {key_char+}
 boolean = {"true" | "false"}
 null = {"null"}
 number = {
@@ -12,7 +15,6 @@ number = {
 }
 array = {"[]" |"[" ~ value ~ ("," ~ value)* ~ "]"}
 WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
-object = _{"{}" | "{" ~ pair ~ ("," ~ pair)* ~ "}"}
 value = {number | string | boolean | null | array | object}
-pair = {string ~ ":" ~ value }
-json = {SOI ~ (object | array) ~ EOI}
+pair = {key ~ ":" ~ value }
+object = _{"{}" | "{" ~ pair ~ ("," ~ pair)* ~ "}"}
