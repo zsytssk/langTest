@@ -1,18 +1,18 @@
 char = _{ !("\"" | "\\") ~ ANY  | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
     | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4}) }
 inner = @{char*}
-String = ${ "\"" ~ inner ~ "\"" }
-Boolean = {"true" | "false"}
-Null = {"null"}
-Number = {
+string = ${ "\"" ~ inner ~ "\"" }
+boolean = {"true" | "false"}
+null = {"null"}
+number = {
     "-"?
     ~ ("0" | ASCII_NONZERO_DIGIT ~ ASCII_DIGIT*)
     ~ ("." ~ ASCII_DIGIT*)?
     ~ (^"e" ~ ("+" | "-")? ~ ASCII_DIGIT+)?
 }
-Array = {"[]" |"[" ~ value ~ ("," ~ value)* ~ "]"}
+array = {"[]" |"[" ~ value ~ ("," ~ value)* ~ "]"}
 WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
-Object = _{"{}" | "{" ~ pair ~ ("," ~ pair)* ~ "}"}
-value = {Number | String | Boolean | Null | Array | Object}
-pair = {String ~ ":" ~ value }
-json = {Object | Array}
+object = _{"{}" | "{" ~ pair ~ ("," ~ pair)* ~ "}"}
+value = {number | string | boolean | null | array | object}
+pair = {string ~ ":" ~ value }
+json = {object | array}
