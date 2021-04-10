@@ -15,4 +15,4 @@ WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
 object = _{"{}" | "{" ~ pair ~ ("," ~ pair)* ~ "}"}
 value = {number | string | boolean | null | array | object}
 pair = {string ~ ":" ~ value }
-json = {object | array}
+json = {SOI ~ (object | array) ~ EOI}
