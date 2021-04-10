@@ -20,13 +20,12 @@ fn main() {
         .next()
         .unwrap();
 
-    println!("{:#?}", file.into_inner())
-    // for enclosed in file.into_inner() {
-    //     match enclosed.as_rule() {
-    //         Rule::number => {
-    //             println!("{}", enclosed.as_str())
-    //         }
-    //         _ => unreachable!(),
-    //     }
-    // }
+    for enclosed in file.into_inner() {
+        match enclosed.as_rule() {
+            Rule::number => {
+                println!("{}", enclosed.as_str())
+            }
+            _ => unreachable!(),
+        }
+    }
 }
