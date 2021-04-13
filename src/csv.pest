@@ -21,11 +21,12 @@ name = { !(ASCII_DIGIT) ~ name_char*}
 value = _{name | string | number}
 
 operator =  {"+" | "-" | "*" | "/"}
-operate =  {name ~ operator ~ name}
+operate =  {value ~ operator ~ value}
 
-test = {value | operate}
+define_right = {operate | value}
+define_left = {name}
 define_key = {"let"}
-define = { define_key ~ name ~ "=" ~ test ~ ";" }
+define = { define_key ~ define_left ~ "=" ~ define_right ~ ";" }
 
 statement = _{define}
 scope = {
