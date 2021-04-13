@@ -1,20 +1,35 @@
-char = _{ !("\"" | "\\") ~ ANY  | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
-    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4}) }
-inner = @{char*}
-inner2 = _{inner}
-string = @{ "\"" ~ inner2 ~ "\"" }
-key_char = _{'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | "_"}
-key = {key_char+}
-boolean = {"true" | "false"}
-null = {"null"}
-number = {
+number = @{
     "-"?
     ~ ("0" | ASCII_NONZERO_DIGIT ~ ASCII_DIGIT*)
     ~ ("." ~ ASCII_DIGIT*)?
     ~ (^"e" ~ ("+" | "-")? ~ ASCII_DIGIT+)?
 }
-array = {"[]" |"[" ~ value ~ ("," ~ value)* ~ "]"}
+
 WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
-value = {number | string | boolean | null | array | object}
-pair = {key ~ ":" ~ value }
-object = _{"{}" | "{" ~ pair ~ ("," ~ pair)* ~ "}"}
+
+string = ${ "\"" ~ inner ~ "\"" }
+inner = @{ char* }
+char = {
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+name_char  = _{'a' .. 'z' | 'A' ..'Z' | '0' .. '9' | "_"}
+name = { !(ASCII_DIGIT) ~ name_char*}
+
+value = _{name | string | number}
+
+operator =  {"+" | "-" | "*" | "/"}
+operate =  {name ~ operator ~ name}
+
+test = {value | operate}
+define_key = {"let"}
+define = { define_key ~ name ~ "=" ~ test ~ ";" }
+
+statement = _{define}
+scope = {
+    "{" ~ define* ~ "}"
+}
+
+file = {SOI ~ scope ~ EOI}

@@ -15,7 +15,7 @@ fn main() {
     let path = env::current_dir().expect("err");
     println!("{}", path.display());
     let unparsed_file = fs::read_to_string("src/number.csv").expect("cannot read file");
-    let file = CSVParser::parse(Rule::object, &unparsed_file)
+    let file = CSVParser::parse(Rule::file, &unparsed_file)
         .expect("unsuccessful parse") // unwrap the parse result
         ;
 

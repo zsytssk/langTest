@@ -1,8 +1,5 @@
 {
-    security: {
-        changePassword: {
-            title: "修改登录密码"
-        }
-    },
-    bet_record_count_m: "总计 <span>{total}</span> 笔投币记录"
+    let a = 1;
+    let b = 2;
+    let c = a + b;
 }
