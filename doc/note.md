@@ -8,6 +8,9 @@ https://pest.rs/book/grammars/grammars.html
 
 - @ques 有没有 not 语法
 
+- @ques 常见的语句有哪些
+  - 赋值
+
 ## 2021-01-04 11:23:14
 
 - @ques 变量怎么定义
