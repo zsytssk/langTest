@@ -2,24 +2,24 @@
 #[macro_use]
 extern crate pest_derive;
 
-use pest::Parser;
+ pest::Parser;
 use std::fs;
 
-use std::env;
-
 #[derive(Parser)]
-#[grammar = "pest/parser.pest"]
+#[grammar = "cha.pest"]
 pub struct CSVParser;
 
 fn main() {
-    let path = env::current_dir().expect("err");
-    println!("{}", path.display());
-    let unparsed_file = fs::read_to_string("test/number.ts").expect("cannot read file");
-    let file = CSVParser::parse(Rule::file, &unparsed_file).expect("unsuccessful parse");
+    let unparsed_file = fs::read_to_string("src/number.csv").expect("cannot read file");
+    let parse_result = CSVParser::parse(Rule::statement, &unparsed_file);
 
-    println!("{:#?}", file);
-
-    // for item in file.into_inner() {
-    //     println!("{:?}", item.as_str());
-    // }
+    match parse_result {
+        Ok(mut pairs) => {
+            let pair = pairs.next().unwrap().into_inner();
+            for item in pair {
+                println!("{:?}", item.as_str());
+            }
+        },
+        Err(_err) => {}
+    }
 }
