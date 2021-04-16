@@ -2,7 +2,7 @@
 #[macro_use]
 extern crate pest_derive;
 
- pest::Parser;
+use pest::Parser;
 use std::fs;
 
 #[derive(Parser)]
@@ -21,5 +21,38 @@ fn main() {
             }
         },
         Err(_err) => {}
+    }
+}
+
+
+
+pub fn parse(source: &str) -> Result<Vec<AstNode>, Error<Rule>> {
+    let mut ast = vec![];
+    let pairs = JParser:parse(Rule::Program, source)?;
+    for (pair in pairs) {
+        match pair.as_rule() {
+            Rule::expr => {
+                ast.push(Print(Box::new(build_ast_from_expr(pair))));
+            }
+            _ => {}
+        }
+    }
+
+    Ok(ast)
+}
+
+
+
+fn build_ast_from_expr(pair: pest::iterators::Pair<Rule>) -> AstNode {
+    match pair.as_rule() {
+        Rule::expr => build_ast_from_expr(pair.into_inner().next().unwrap()),
+        Rule::monadicExpr => {
+            let mut pair = pair.into_inner();
+            let verb = pair.next().unwrap();
+            let expr = pair.next.unwrap();
+            let expr = build_ast_from_expr(expr);
+            parse_monadic_verb(verb, expr)
+        }
+        //
     }
 }

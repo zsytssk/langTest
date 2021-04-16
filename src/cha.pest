@@ -17,7 +17,7 @@ terms = { term+ }
 
 term = _{ decimal | integer | ident | "(" ~ expr ~ ")" }
 manadicExpr = { verb ~ expr }
-dyadicExpr = {(monadicExpr | terms) ~ verb ~ expr}
+dyadicExpr = {(manadicExpr | terms) ~ verb ~ expr}
 assgmtExpr = {ident ~ "=:" ~expr}
 expr = {
     assgmtExpr
